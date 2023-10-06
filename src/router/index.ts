@@ -5,7 +5,28 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    children:[
+      {
+        path: 'order',
+        name: 'order',
+        meta:{
+          isShow:true,
+          title:"订单列表"
+        },
+        component: () => import('../views/OrderView.vue')
+      },
+      {
+        path: 'userList',
+        name: 'userList',
+        meta:{
+          isShow:true,
+          title:"用户列表"
+        },
+        component: () => import('../views/UserView.vue')
+      }
+    ]
+
   },
   {
     path: '/about',

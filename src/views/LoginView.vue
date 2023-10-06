@@ -34,11 +34,13 @@
  <script lang="ts">
 import { defineComponent, reactive,toRefs } from 'vue'
 import {InitData} from "../types/login"
-
+import {login} from "../http/api"
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
     setup () {
         const data = reactive(new InitData())
+        const router = useRouter()
         const rules = {
                 userName: [
                 { required: true, message: '请输入账号', trigger: 'blur' },
@@ -53,6 +55,11 @@ export default defineComponent({
         const submitForm = ()=>{
             data.loginFormRef?.validate((valid)=>{
                 if(valid){
+                    login(data.loginForm).then(res=>{
+                        console.log(res)
+                        localStorage.setItem("token",res.data.token)
+                        router.push("/")
+                    })
                     alert("验证通过，发送请求")
                 }
             })
